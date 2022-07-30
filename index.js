@@ -4,7 +4,7 @@ const cors = require("cors");
 const mongodb = require("mongodb");
 const mongoClient = mongodb.MongoClient;
 const dotenv = require("dotenv").config();
-const URL = process.env.DB || "mongodb+srv://crm:crm123456@cluster0.0z3n2mj.mongodb.net/?retryWrites=true&w=majority";
+const URL = process.env.DB || "mongodb+srv://crm:crm123456@cluster0.0z3n2mj.mongodb.net/blog?retryWrites=true&w=majority";
 const bcryptjs = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
