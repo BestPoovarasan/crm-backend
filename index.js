@@ -20,7 +20,26 @@ app.get('/', (req, res) => {
   res.send('GET request to homepage')
 })
 
+app.get("/service", async function (req, res) {
+  try {
+    // Open the Connection
+    const connection = await mongoClient.connect(URL);
+    // Select the DB
+    const db = connection.db("blog");
+    // Select the collection and do the operation
+    let students = await db
+      .collection("users")
+      .find({ email: mongodb.ObjectId(req.email) })
+      .toArray();
 
+    // Close the connection
+    await connection.close();
+
+    res.json(students);
+  } catch (error) {
+    console.log(error);
+  }
+});
 // let authenticate = function (req, res, next) {
 //   if (req.headers.authorization) {
 //    try {
