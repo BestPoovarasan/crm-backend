@@ -29,7 +29,7 @@ app.get("/service", async function (req, res) {
     // Select the collection and do the operation
     let students = await db
       .collection("users")
-      .find({ email: mongodb.ObjectId(req.email) })
+      .find({ userid: mongodb.ObjectId(req.userid) })
       .toArray();
 
     // Close the connection
