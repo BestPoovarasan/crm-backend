@@ -3,8 +3,8 @@ const app = express();
 const cors = require("cors");
 const mongodb = require("mongodb");
 const mongoClient = mongodb.MongoClient;
-// const dotenv = require("dotenv").config();
-const URL = "mongodb+srv://crm:crm123456@cluster0.0z3n2mj.mongodb.net/test";
+const dotenv = require("dotenv").config;
+const URL = process.env.DB;
 // const bcrypt = require("bcrypt");
 // const jwt = require("jsonwebtoken");
 
