@@ -46,9 +46,9 @@ app.post("/register", async function (req, res) {
     // Select the DB
     const db = connection.db("blog");
     // Select the Collection
-    const salt = await bcryptjs.genSalt(10);
-    const hash = await bcryptjs.hash(req.body.password, salt);
-    req.body.password = hash;
+    // const salt = await bcryptjs.genSalt(10);
+    // const hash = await bcryptjs.hash(req.body.password, salt);
+    // req.body.password = hash;
     await db.collection("users").insertOne(req.body);
     // Close the connection
     await connection.close();
