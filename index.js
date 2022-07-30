@@ -3,10 +3,10 @@ const app = express();
 const cors = require("cors");
 const mongodb = require("mongodb");
 const mongoClient = mongodb.MongoClient;
-// const dotenv = require("dotenv").config();
-const URL = process.env.DB
+const dotenv = require("dotenv").config();
+const URL = process.env.db;
 const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 
 // Middleweare
 app.use(express.json());
@@ -62,39 +62,39 @@ app.post("/register", async function (req, res) {
   }
 });
 
-app.post("/login", async function (req, res) {
-  try {
-    // Open the Connection
-    const connection = await mongoClient.connect(URL);
-    // Select the DB
-    const db = connection.db("blog");
-    // Select the Collection
-    const user = await db
-      .collection("users")
-      .findOne({ email: req.body.email });
+// app.post("/login", async function (req, res) {
+//   try {
+//     // Open the Connection
+//     const connection = await mongoClient.connect(URL);
+//     // Select the DB
+//     const db = connection.db("blog");
+//     // Select the Collection
+//     const user = await db
+//       .collection("users")
+//       .findOne({ email: req.body.email });
 
-    if (user) {
-      const match = await bcryptjs.compare(req.body.password, user.password);
-      if (match) {
-        // Token
-        const token = jwt.sign({ _id: user._id }, SECRET, { expiresIn: "1m" });
-        res.json({
-          message: "Successfully Logged In",
-          token,
-        });
-      } else {
-        res.status(401).json({
-          message: "Password is incorrect",
-        });
-      }
-    } else {
-      res.status(401).json({
-        message: "User not found",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
+//     if (user) {
+//       const match = await bcryptjs.compare(req.body.password, user.password);
+//       if (match) {
+//         // Token
+//         const token = jwt.sign({ _id: user._id }, SECRET, { expiresIn: "1m" });
+//         res.json({
+//           message: "Successfully Logged In",
+//           token,
+//         });
+//       } else {
+//         res.status(401).json({
+//           message: "Password is incorrect",
+//         });
+//       }
+//     } else {
+//       res.status(401).json({
+//         message: "User not found",
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 app.listen(process.env.PORT || 3001);
