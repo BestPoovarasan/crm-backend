@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 app.post("/register", async function (req, res) {
   try {
     // Open the Connection
-    const connection = await mongoClient.connect(url);
+    const connection = await mongoClient.connect(URL);
     // Select the DB
     const db = connection.db("blog");
     // Select the Collection
