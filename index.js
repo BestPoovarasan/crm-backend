@@ -87,7 +87,7 @@ app.post("/login", async function (req, res) {
     // Select the Collection
     const user = await db.collection("users").findOne({ email: req.body.email });
     if (user) {
-      const match = await bcryptjs.compare(req.body.pass, user.pass);
+      const match = await bcryptjs.compare(req.body.password, user.password);
       if (match) {
         // Token
         // const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "1m" });
