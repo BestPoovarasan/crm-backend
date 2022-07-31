@@ -41,10 +41,10 @@ app.get("/service", authenticate, async function (req, res) {
     // Select the DB
     const db = connection.db("blog");
     // Select the collection and do the operation
-    let students = await db.collection("users").find({ userid: mongodb.ObjectId(req.userid) }).toArray();
+    let service = await db.collection("users").find().toArray();
     // Close the connection
     await connection.close();
-    res.json(students);
+    res.json(service);
   } catch (error) {
     console.log(error);
   }
