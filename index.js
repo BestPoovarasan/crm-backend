@@ -6,7 +6,7 @@ const mongoClient = mongodb.MongoClient;
 const dotenv = require("dotenv").config;
 const URL = process.env.DB;
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 
 // Middleweare
 app.use(express.json());
@@ -15,6 +15,10 @@ app.use(
     origin: "*",
   })
 );
+
+app.get('/', (req, res) => {
+  res.send('hello world')
+});
 
 // let authenticate = function (req, res, next) {
 //   if (req.headers.authorization) {
@@ -34,7 +38,7 @@ app.use(
 //   }
 // };
 
-app.get("/service", authenticate, async function (req, res) {
+app.get("/service", async function (req, res) {
   try {
     // Open the Connection
     const connection = await mongoClient.connect(URL);
