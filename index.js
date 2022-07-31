@@ -76,13 +76,9 @@ app.post("/login", async function (req, res) {
 
 app.get("/service", async function (req, res) {
   try {
-    // Open the Connection
     const connection = await mongoClient.connect(URL);
-    // Select the DB
     const db = connection.db("blog");
-    // Select the collection and do the operation
     let student = await db.collection("users").find().toArray();
-    // Close the connection
     await connection.close();
     res.json(student);
   } catch (error) {
@@ -114,6 +110,51 @@ app.post("/register", async function (req, res) {
   }
 });
 
+app.post("/servicereq", async function (req, res) {
+  try {
+    const connection = await mongoClient.connect(URL);
+    const db = connection.db("blog");
+    await db.collection("request").insertOne(req.body);
+    await connection.close();
+    res.json({
+      message: "Successfully Request",
+    });
+  } catch (error) {
+    res.json({
+      message: "Error",
+    });
+  }
+});
+
+app.put("/servicereq/:id", async function (req, res) {
+  try {
+    const connection = await mongoClient.connect(URL);
+    const db = connection.db("blog");
+    let student = await db
+      .collection("request")
+      .updateOne({ _id: mongodb.ObjectId(req.params.id) }, { $set: req.body });
+    await connection.close();
+    res.json({
+      message: "updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/register/:id", async function (req, res) {
+  try {
+    const connection = await mongoClient.connect(URL);
+    const db = connection.db("blog");
+    let student = await db
+      .collection("users")
+      .findOne({ _id: mongodb.ObjectId(req.params.id) });
+    await connection.close();
+    res.json(student);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 
 app.listen(process.env.PORT || 3001);
