@@ -45,10 +45,10 @@ app.get("/service", async function (req, res) {
     // Select the DB
     const db = connection.db("blog");
     // Select the collection and do the operation
-    let service = await db.collection("users").find().toArray();
+    let student = await db.collection("users").find().toArray();
     // Close the connection
     await connection.close();
-    res.json(service);
+    res.json(student);
   } catch (error) {
     console.log(error);
   }
@@ -78,36 +78,36 @@ app.post("/register", async function (req, res) {
   }
 });
 
-app.post("/login", async function (req, res) {
-  try {
-    // Open the Connection
-    const connection = await mongoClient.connect(URL);
-    // Select the DB
-    const db = connection.db("blog");
-    // Select the Collection
-    const user = await db.collection("users").findOne({ email: req.body.email });
-    if (user) {
-      const match = await bcrypt.compare(req.body.pass, user.pass);
-      if (match) {
-        // Token
-        // const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "1m" });
-        res.json({
-          message: "Successfully Logged In",
-          token,
-        });
-      } else {
-        res.status(401).json({
-          message: "Password is incorrect",
-        });
-      }
-    } else {
-      res.status(401).json({
-        message: "User not found",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
+// app.post("/login", async function (req, res) {
+//   try {
+//     // Open the Connection
+//     const connection = await mongoClient.connect(URL);
+//     // Select the DB
+//     const db = connection.db("blog");
+//     // Select the Collection
+//     const user = await db.collection("users").findOne({ email: req.body.email });
+//     if (user) {
+//       const match = await bcrypt.compare(req.body.pass, user.pass);
+//       if (match) {
+//         // Token
+//         // const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "1m" });
+//         res.json({
+//           message: "Successfully Logged In",
+//           token,
+//         });
+//       } else {
+//         res.status(401).json({
+//           message: "Password is incorrect",
+//         });
+//       }
+//     } else {
+//       res.status(401).json({
+//         message: "User not found",
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 app.listen(process.env.PORT || 3001);
