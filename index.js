@@ -16,23 +16,23 @@ app.use(
   })
 );
 
-let authenticate = function (req, res, next) {
-  if (req.headers.authorization) {
-   try {
-    let verify = jwt.verify(req.headers.authorization,);
-    if (verify) {
-      req.userid = verify._id;
-      next();
-    } else {
-      res.status(401).json({ message: "Unauthorized" });
-    }
-   } catch (error) {
-    res.status(401).json({ message: "Unauthorized" });
-   }
-  } else {
-    res.status(401).json({ message: "Unauthorized" });
-  }
-};
+// let authenticate = function (req, res, next) {
+//   if (req.headers.authorization) {
+//    try {
+//     let verify = jwt.verify(req.headers.authorization,);
+//     if (verify) {
+//       req.userid = verify._id;
+//       next();
+//     } else {
+//       res.status(401).json({ message: "Unauthorized" });
+//     }
+//    } catch (error) {
+//     res.status(401).json({ message: "Unauthorized" });
+//    }
+//   } else {
+//     res.status(401).json({ message: "Unauthorized" });
+//   }
+// };
 
 app.get("/service", authenticate, async function (req, res) {
   try {
@@ -86,7 +86,7 @@ app.post("/login", async function (req, res) {
       const match = await bcrypt.compare(req.body.pass, user.pass);
       if (match) {
         // Token
-        // const token = jwt.sign({ _id: user._id }, SECRET, { expiresIn: "1m" });
+        // const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "1m" });
         res.json({
           message: "Successfully Logged In",
           token,
